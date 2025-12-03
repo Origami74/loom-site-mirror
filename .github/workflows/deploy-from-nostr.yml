@@ -42,8 +42,7 @@ jobs:
       - name: Pull from Nostr repository
         run: |
           # Add the Nostr remote using ngit
-          # Replace <NOSTR_REPO_NADDR> with your actual Nostr repository naddr
-          ngit remote add nostr <NOSTR_REPO_NADDR>
+          ngit remote add nostr "nostr://npub1hw6amg8p24ne08c9gdq8hhpqx0t0pwanpae9z25crn7m9uy7yarse465gr/relay.ngit.dev/loom-site"
           
           # Fetch from Nostr
           ngit fetch nostr
