@@ -23,12 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout GitHub repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
-      
       - name: Install ngit
         run: |
           curl -Ls https://ngit.dev/install.sh | bash
@@ -39,16 +33,16 @@ jobs:
           git config --global user.name "Loom Bot"
           git config --global user.email "bot@loom.dev"
       
-      - name: Pull from Nostr repository
+      - name: Clone from Nostr repository
         run: |
-          # Add the Nostr remote using ngit
-          ngit remote add nostr "nostr://npub1hw6amg8p24ne08c9gdq8hhpqx0t0pwanpae9z25crn7m9uy7yarse465gr/relay.ngit.dev/loom-site"
+          # Clone the Nostr repository using ngit
+          git clone nostr://npub1hw6amg8p24ne08c9gdq8hhpqx0t0pwanpae9z25crn7m9uy7yarse465gr/relay.ngit.dev/loom-site loom-site-source
           
-          # Fetch from Nostr
-          ngit fetch nostr
-          
-          # Merge changes from Nostr main branch
-          git merge nostr/main --allow-unrelated-histories -m "Sync from Nostr repository" || true
+          # Copy contents to current directory
+          cd loom-site-source
+          cp -r . ../
+          cd ..
+          rm -rf loom-site-source
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
